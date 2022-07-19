@@ -1,11 +1,11 @@
-export default function StocksTableEntry() {
+export default function StocksTableEntry(props) {
     return (
         <tr>
-            <td>Tesla</td>
-            <td>100</td>
-            <td>2</td>
-            <td>200</td>
-            <td>+1.00%</td>
+            <td>{props.data.name}</td>
+            <td>{props.data.value}</td>
+            <td>{props.data.amount}</td>
+            <td>{props.data.sum}</td>
+            <td>{props.data.dailyChange}</td>
         </tr>
     );
 }
