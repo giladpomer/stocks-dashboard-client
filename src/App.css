@@ -1,3 +1,11 @@
 .App {
-  text-align: center;
+    text-align: center;
+}
+
+.stock .up {
+    color: #008603 !important;
+}
+
+.stock .down {
+    color: #a40d0d !important;
 }
