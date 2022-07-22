@@ -1,31 +1,87 @@
+import React from 'react';
 import Table from 'react-bootstrap/Table';
+import axios from 'axios';
 
 import StocksTableEntry from './StocksTableEntry';
 
 export default function StocksTable() {
+    const [_stocks, setStocks] = React.useState(getList());
+
     function getList() {
         return [
             {
                 id: 'US88160R1014',
                 name: 'Tesla Inc.',
-                value: 100,
-                amount: 2,
-                sum: 200,
-                dailyChange: '+1.00%'
+                amount: 2
             },
             {
                 id: 'US0231351067',
                 name: 'Amazon.Com Inc.',
-                value: 50,
-                amount: 6,
-                sum: 300,
-                dailyChange: '+2.20%'
+                amount: 6
             }
         ];
     };
 
+    React.useEffect(() => {
+        refreshStocksLiveData();
+    }, []);
+
+    async function refreshStocksLiveData() {
+        var currentStocksLiveData = await getCurrentStocksLiveData();
+
+        setStocks(prevStocks => {
+            var stocks = [...prevStocks];
+
+            for (var i = 0; i < stocks.length; i++) {
+                var stock = stocks[i];
+                stock.liveData = currentStocksLiveData[stock.id];
+            }
+
+            return stocks;
+        });
+    }
+
+    async function getCurrentStocksLiveData() {
+        var currentStocksLiveData = {};
+
+        for (var i = 0; i < _stocks.length; i++) {
+            var stock = _stocks[i];
+            var liveData = await getStockLiveData(stock);
+
+            currentStocksLiveData[stock.id] = liveData;
+        }
+
+        return currentStocksLiveData;
+    }
+
+    async function getStockLiveData(stock) {
+        var response = await axios.get('https://www.tradegate.de/refresh.php?isin=' + stock.id);
+        var stockData = response.data;
+
+        var liveData = {
+            value: forceUSNumberFormatting(stockData.bid),
+            dailyChange: stockData.delta
+        };
+
+        liveData.sum = liveData.value * stock.amount;
+
+        return liveData;
+    }
+
+    function forceUSNumberFormatting(value) {
+        if (value == null) {
+            return '';
+        }
+
+        if (typeof value === 'string' || value instanceof String) {
+            return (value).replace(' ', '').replace(',', '.');
+        }
+
+        return value;
+    }
+
     function getEntries() {
-        return getList().map((data) =>
+        return _stocks.map((data) =>
             <StocksTableEntry
                 key={data.id}
                 data={data}
