@@ -66,7 +66,7 @@ export default function StocksTable() {
 
         var liveData = {
             value: forceUSNumberFormatting(stockData.bid),
-            dailyChange: stockData.delta
+            dailyChange: forceUSNumberFormatting(removePossiblePlusSign(stockData.delta))
         };
 
         liveData.sum = liveData.value * stock.amount;
@@ -84,6 +84,10 @@ export default function StocksTable() {
         }
 
         return value;
+    }
+
+    function removePossiblePlusSign(value) {
+        return (value+'').replace('+', '');
     }
 
     function getEntries() {
