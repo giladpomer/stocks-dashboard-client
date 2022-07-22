@@ -24,6 +24,12 @@ export default function StocksTable() {
 
     React.useEffect(() => {
         refreshStocksLiveData();
+
+        const timerId = setInterval(refreshStocksLiveData, 5000);
+
+        return function cleanup() {
+            clearInterval(timerId);
+        };
     }, []);
 
     async function refreshStocksLiveData() {
