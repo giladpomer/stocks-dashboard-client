@@ -18,6 +18,16 @@ export default function StocksTable() {
                 id: 'US0231351067',
                 name: 'Amazon.Com Inc.',
                 amount: 6
+            },
+            {
+                id: 'US0378331005',
+                name: 'Apple Inc.',
+                amount: 3
+            },
+            {
+                id: 'US30303M1027',
+                name: 'Meta Platforms Inc.',
+                amount: 1
             }
         ];
     };
