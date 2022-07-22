@@ -58,13 +58,13 @@ export default function StocksTableEntry(props) {
                 {props.data.name}
             </td>
             <td className={getChangeClassName(_stockValueChange)}>
-                {props.data.liveData?.value ?? ''}
+                &euro;{props.data.liveData?.value ?? ''}
             </td>
             <td>
                 {props.data.amount?.toLocaleString('en-US')}
             </td>
             <td className={getChangeClassName(_stockValueChange)}>
-                {props.data.liveData?.sum?.toLocaleString('en-US', { minimumFractionDigits: 2 }) ?? ''}
+                &euro;{props.data.liveData?.sum?.toLocaleString('en-US', { minimumFractionDigits: 2 }) ?? ''}
             </td>
             <td className={getChangeClassName(props.data.liveData?.dailyChange)}>
                 {formatDailyChange(props.data.liveData?.dailyChange)?.toLocaleString('en-US', { minimumFractionDigits: 2 }) + '%'}
