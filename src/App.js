@@ -1,6 +1,6 @@
 import './App.css';
 
-import StocksTable from './components/table/StocksTable';
+import StocksDashboard from './components/dashboard/StocksDashboard';
 
 function App() {
     return (
@@ -9,7 +9,7 @@ function App() {
                 Stocks Dashboard
             </h1>
 
-            <StocksTable />
+            <StocksDashboard />
         </div>
     );
 }

@@ -9,3 +9,10 @@
 .stock .down {
     color: #a40d0d !important;
 }
+
+.pie-chart {
+    display: inline-block !important;
+    max-width: 500px;
+    max-height: 500px;
+    margin: 5%;
+}
