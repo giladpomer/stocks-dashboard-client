@@ -8,6 +8,8 @@ export default function StocksTable(props) {
             <StocksTableEntry
                 key={data.id}
                 data={data}
+                onDelete={props.onDeleteStock}
+                isEditMode={props.isEditMode}
             />
         );
     }
@@ -16,6 +18,7 @@ export default function StocksTable(props) {
         <Table striped bordered hover>
             <thead>
                 <tr>
+                    {props.isEditMode && <th></th>}
                     <th>Name</th>
                     <th>Value</th>
                     <th>Amount</th>

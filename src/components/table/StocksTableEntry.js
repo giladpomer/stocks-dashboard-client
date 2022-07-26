@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 export default function StocksTableEntry(props) {
     const [_stockValue, setStockValue] = React.useState(null);
@@ -50,10 +51,19 @@ export default function StocksTableEntry(props) {
         }
 
         return '';
-    };
+    }
+
+    function deleteStock() {
+        props.onDelete(props.data);
+    }
 
     return (
         <tr className='stock'>
+            {props.isEditMode &&
+                <td>
+                    <Button onClick={deleteStock} variant="outline-danger" size="sm">X</Button>
+                </td>
+            }
             <td>
                 {props.data.name}
             </td>

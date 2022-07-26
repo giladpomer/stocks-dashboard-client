@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 import StocksTable from '../table/StocksTable';
 import StocksPieChart from '../pie-chart/StocksPieChart';
 
 export default function StocksDashboard() {
     const [_stocks, setStocks] = React.useState(getList());
+    const [_isEditMode, setIsEditMode] = React.useState(false);
 
     React.useEffect(() => {
         refreshStocksLiveData();
@@ -100,9 +102,31 @@ export default function StocksDashboard() {
         return (value + '').replace('+', '');
     }
 
+    function toggleEditMode() {
+        setIsEditMode(isEditMode => !isEditMode);
+    }
+
+    function deleteStock(stock) {
+        setStocks(prevStocks => {
+            var stocks = [...prevStocks];
+
+            stocks = stocks.filter(item => item !== stock)
+
+            return stocks;
+        });
+    }
+
     return (
         <div>
-            <StocksTable stocks={_stocks} />
+            <Button onClick={toggleEditMode} className="edit-button" variant={_isEditMode ? 'outline-success' : 'outline-primary'}>
+                {_isEditMode ? 'Done' : 'Edit Stocks'}
+            </Button>
+
+            <StocksTable
+                stocks={_stocks}
+                onDeleteStock={deleteStock}
+                isEditMode={_isEditMode}
+            />
             <StocksPieChart stocks={_stocks} />
         </div>
     );

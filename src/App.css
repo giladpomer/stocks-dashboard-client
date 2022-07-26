@@ -2,13 +2,21 @@
     text-align: center;
 }
 
-.stock .up {
-    color: #008603 !important;
+.edit-button {
+    margin: 20px;
 }
 
-.stock .down {
-    color: #a40d0d !important;
+.stock {
+    vertical-align: middle;
 }
+
+    .stock .up {
+        color: #008603 !important;
+    }
+
+    .stock .down {
+        color: #a40d0d !important;
+    }
 
 .pie-chart {
     display: inline-block !important;
