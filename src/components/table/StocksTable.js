@@ -9,6 +9,7 @@ export default function StocksTable(props) {
                 key={data.id}
                 data={data}
                 onDelete={props.onDeleteStock}
+                onUpdateAmount={props.onUpdateStockAmount}
                 isEditMode={props.isEditMode}
             />
         );

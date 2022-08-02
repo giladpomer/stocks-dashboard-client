@@ -116,6 +116,22 @@ export default function StocksDashboard() {
         });
     }
 
+    function updateStockAmount(stock, amount) {
+        setStocks(prevStocks => {
+            var stocks = [...prevStocks];
+
+            var stockItem = stocks.find(item => item === stock);
+            stockItem.amount = amount;
+            updateStockSum(stockItem);
+
+            return stocks;
+        });
+    }
+
+    function updateStockSum(stock) {
+        stock.liveData.sum = stock.liveData.value * stock.amount;
+    }
+
     return (
         <div>
             <Button onClick={toggleEditMode} className="edit-button" variant={_isEditMode ? 'outline-success' : 'outline-primary'}>
@@ -125,6 +141,7 @@ export default function StocksDashboard() {
             <StocksTable
                 stocks={_stocks}
                 onDeleteStock={deleteStock}
+                onUpdateStockAmount={updateStockAmount}
                 isEditMode={_isEditMode}
             />
             <StocksPieChart stocks={_stocks} />

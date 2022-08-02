@@ -1,9 +1,11 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 export default function StocksTableEntry(props) {
     const [_stockValue, setStockValue] = React.useState(null);
     const [_stockValueChange, setStockValueChange] = React.useState(0);
+    const [_stockAmount, setStockAmount] = React.useState(props.data.amount);
 
     React.useEffect(() => {
         setStockValue(prevValue => {
@@ -57,6 +59,13 @@ export default function StocksTableEntry(props) {
         props.onDelete(props.data);
     }
 
+    function updateStockAmount(e) {
+        var amount = e.target.value;
+
+        setStockAmount(amount);
+        props.onUpdateAmount(props.data, amount);
+    }
+
     return (
         <tr className='stock'>
             {props.isEditMode &&
@@ -71,7 +80,16 @@ export default function StocksTableEntry(props) {
                 &euro;{props.data.liveData?.value ?? ''}
             </td>
             <td>
-                {props.data.amount?.toLocaleString('en-US')}
+                {props.isEditMode
+                    ? <Form.Control
+                        className="amount-input"
+                        size="sm"
+                        type="number"
+                        placeholder="Amount"
+                        onChange={updateStockAmount}
+                        value={_stockAmount?.toLocaleString('en-US')} />
+                    : _stockAmount?.toLocaleString('en-US')
+                }
             </td>
             <td className={getChangeClassName(_stockValueChange)}>
                 &euro;{props.data.liveData?.sum?.toLocaleString('en-US', { minimumFractionDigits: 2 }) ?? ''}

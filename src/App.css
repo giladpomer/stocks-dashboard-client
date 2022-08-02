@@ -18,6 +18,18 @@
         color: #a40d0d !important;
     }
 
+    .stock .amount-input {
+        max-width: 100px;
+        margin: auto;
+        text-align: center;
+    }
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    display: none;
+    margin-left: -14px;
+}
+
 .pie-chart {
     display: inline-block !important;
     max-width: 500px;
