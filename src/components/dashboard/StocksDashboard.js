@@ -45,13 +45,13 @@ export default function StocksDashboard() {
     }
 
     async function refreshStocksLiveData() {
-        var currentStocksLiveData = await getCurrentStocksLiveData();
+        const currentStocksLiveData = await getCurrentStocksLiveData();
 
         setStocks(prevStocks => {
-            var stocks = [...prevStocks];
+            const stocks = [...prevStocks];
 
-            for (var i = 0; i < stocks.length; i++) {
-                var stock = stocks[i];
+            for (let i = 0; i < stocks.length; i++) {
+                const stock = stocks[i];
                 stock.liveData = currentStocksLiveData[stock.id];
             }
 
@@ -60,11 +60,11 @@ export default function StocksDashboard() {
     }
 
     async function getCurrentStocksLiveData() {
-        var currentStocksLiveData = {};
+        const currentStocksLiveData = {};
 
-        for (var i = 0; i < _stocks.length; i++) {
-            var stock = _stocks[i];
-            var liveData = await getStockLiveData(stock);
+        for (let i = 0; i < _stocks.length; i++) {
+            const stock = _stocks[i];
+            const liveData = await getStockLiveData(stock);
 
             currentStocksLiveData[stock.id] = liveData;
         }
@@ -73,10 +73,10 @@ export default function StocksDashboard() {
     }
 
     async function getStockLiveData(stock) {
-        var response = await axios.get('https://www.tradegate.de/refresh.php?isin=' + stock.id);
-        var stockData = response.data;
+        const response = await axios.get('https://www.tradegate.de/refresh.php?isin=' + stock.id);
+        const stockData = response.data;
 
-        var liveData = {
+        const liveData = {
             value: forceUSNumberFormatting(stockData.bid),
             dailyChange: forceUSNumberFormatting(removePossiblePlusSign(stockData.delta))
         };
@@ -108,19 +108,17 @@ export default function StocksDashboard() {
 
     function deleteStock(stock) {
         setStocks(prevStocks => {
-            var stocks = [...prevStocks];
+            const stocks = [...prevStocks];
 
-            stocks = stocks.filter(item => item !== stock)
-
-            return stocks;
+            return stocks.filter(item => item !== stock);
         });
     }
 
     function updateStockAmount(stock, amount) {
         setStocks(prevStocks => {
-            var stocks = [...prevStocks];
+            const stocks = [...prevStocks];
 
-            var stockItem = stocks.find(item => item === stock);
+            const stockItem = stocks.find(item => item === stock);
             stockItem.amount = amount;
             updateStockSum(stockItem);
 
@@ -129,6 +127,10 @@ export default function StocksDashboard() {
     }
 
     function updateStockSum(stock) {
+        if (!stock.liveData) {
+            return;
+        }
+
         stock.liveData.sum = stock.liveData.value * stock.amount;
     }
 

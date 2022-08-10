@@ -9,7 +9,7 @@ export default function StocksTableEntry(props) {
 
     React.useEffect(() => {
         setStockValue(prevValue => {
-            var newValue = props.data.liveData?.value;
+            const newValue = props.data.liveData?.value;
 
             setStockValueChange(newValue - prevValue);
 
@@ -60,7 +60,7 @@ export default function StocksTableEntry(props) {
     }
 
     function updateStockAmount(e) {
-        var amount = e.target.value;
+        const amount = e.target.value;
 
         setStockAmount(amount);
         props.onUpdateAmount(props.data, amount);
